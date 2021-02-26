@@ -96,14 +96,14 @@ class Theme_My_Login_Themed_Profiles extends Theme_My_Login_Abstract {
 	 * @return array The default pages with the profile page added.
 	 */
 	public function tml_default_pages( $pages ) {
-		$pages['profile'] = __( 'Profile', 'theme-my-login' );
+		$pages['profile'] = __( 'Profile', 'easy-user-profile' );
 		return $pages;
 	}
 
 	/**
 	 * Adds filters to site_url() and admin_url()
 	 *
-	 * Callback for "tml_modules_loaded" in file "theme-my-login.php"
+	 * Callback for "tml_modules_loaded" in file "easy-user-profile.php"
 	 *
 	 * @since 6.0
 	 * @access public
@@ -268,7 +268,7 @@ class Theme_My_Login_Themed_Profiles extends Theme_My_Login_Abstract {
 			check_admin_referer( 'update-user_' . $current_user->ID );
 
 			if ( ! current_user_can( 'edit_user', $current_user->ID ) )
-				wp_die( __( 'You do not have permission to edit this user.', 'theme-my-login' ) );
+				wp_die( __( 'You do not have permission to edit this user.', 'easy-user-profile' ) );
 
 			do_action( 'personal_options_update', $current_user->ID );
 
@@ -305,7 +305,7 @@ class Theme_My_Login_Themed_Profiles extends Theme_My_Login_Abstract {
 		require_once( ABSPATH . 'wp-admin/includes/misc.php' );
 
 		if ( isset( $_GET['updated'] ) && 'true' == $_GET['updated'] )
-			Theme_My_Login::get_object()->errors->add( 'profile_updated', __( 'Profile updated.', 'theme-my-login' ), 'message' );
+			Theme_My_Login::get_object()->errors->add( 'profile_updated', __( 'Profile updated.', 'easy-user-profile' ), 'message' );
 
 		$current_user = wp_get_current_user();
 		$profileuser  = get_user_to_edit( $current_user->ID );

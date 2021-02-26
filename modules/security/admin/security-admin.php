@@ -86,8 +86,8 @@ class Theme_My_Login_Security_Admin extends Theme_My_Login_Abstract {
 	public function admin_menu() {
 		add_submenu_page(
 			'theme_my_login',
-			__( 'Theme My Login Security Settings', 'theme-my-login' ),
-			__( 'Security', 'theme-my-login' ),
+			__( 'Theme My Login Security Settings', 'easy-user-profile' ),
+			__( 'Security', 'easy-user-profile' ),
 			'manage_options',
 			$this->options_key,
 			array( $this, 'settings_page' )
@@ -95,9 +95,9 @@ class Theme_My_Login_Security_Admin extends Theme_My_Login_Abstract {
 
 		add_settings_section( 'general', null, '__return_false', $this->options_key );
 
-		add_settings_field( 'private_site',   __( 'Private Site',   'theme-my-login' ), array( $this, 'settings_field_private_site'   ), $this->options_key, 'general' );
-		add_settings_field( 'private_login',  __( 'Private Login',  'theme-my-login' ), array( $this, 'settings_field_private_login'  ), $this->options_key, 'general' );
-		add_settings_field( 'login_attempts', __( 'Login Attempts', 'theme-my-login' ), array( $this, 'settings_field_login_attempts' ), $this->options_key, 'general' );
+		add_settings_field( 'private_site',   __( 'Private Site',   'easy-user-profile' ), array( $this, 'settings_field_private_site'   ), $this->options_key, 'general' );
+		add_settings_field( 'private_login',  __( 'Private Login',  'easy-user-profile' ), array( $this, 'settings_field_private_login'  ), $this->options_key, 'general' );
+		add_settings_field( 'login_attempts', __( 'Login Attempts', 'easy-user-profile' ), array( $this, 'settings_field_login_attempts' ), $this->options_key, 'general' );
 	}
 
 	/**
@@ -118,7 +118,7 @@ class Theme_My_Login_Security_Admin extends Theme_My_Login_Abstract {
 	 */
 	public function settings_page() {
 		Theme_My_Login_Admin::settings_page( array(
-			'title'       => __( 'Theme My Login Security Settings', 'theme-my-login' ),
+			'title'       => __( 'Theme My Login Security Settings', 'easy-user-profile' ),
 			'options_key' => $this->options_key
 		) );
 	}
@@ -132,7 +132,7 @@ class Theme_My_Login_Security_Admin extends Theme_My_Login_Abstract {
 	public function settings_field_private_site() {
 		?>
 		<input name="<?php echo $this->options_key; ?>[private_site]" type="checkbox" id="<?php echo $this->options_key; ?>_private_site" value="1"<?php checked( $this->get_option( 'private_site' ) ); ?> />
-		<label for="<?php echo $this->options_key; ?>_private_site"><?php _e( 'Require users to be logged in to view site', 'theme-my-login' ); ?></label>
+		<label for="<?php echo $this->options_key; ?>_private_site"><?php _e( 'Require users to be logged in to view site', 'easy-user-profile' ); ?></label>
 		<?php
 	}
 
@@ -145,7 +145,7 @@ class Theme_My_Login_Security_Admin extends Theme_My_Login_Abstract {
 	public function settings_field_private_login() {
 		?>
 		<input name="<?php echo $this->options_key; ?>[private_login]" type="checkbox" id="<?php echo $this->options_key; ?>_private_login" value="1"<?php checked( $this->get_option( 'private_login' ) ); ?> />
-		<label for="<?php echo $this->options_key; ?>_private_login"><?php _e( 'Disable <tt>wp-login.php</tt>', 'theme-my-login' ); ?></label>
+		<label for="<?php echo $this->options_key; ?>_private_login"><?php _e( 'Disable <tt>wp-login.php</tt>', 'easy-user-profile' ); ?></label>
 		<?php
 	}
 
@@ -158,9 +158,9 @@ class Theme_My_Login_Security_Admin extends Theme_My_Login_Abstract {
 	public function settings_field_login_attempts() {
 		// Units
 		$units = array(
-			'minute' => __( 'minute(s)', 'theme-my-login' ),
-			'hour'   => __( 'hour(s)',   'theme-my-login' ),
-			'day'    => __( 'day(s)',    'theme-my-login' )
+			'minute' => __( 'minute(s)', 'easy-user-profile' ),
+			'hour'   => __( 'hour(s)',   'easy-user-profile' ),
+			'day'    => __( 'day(s)',    'easy-user-profile' )
 		);
 
 		// Threshold
@@ -187,7 +187,7 @@ class Theme_My_Login_Security_Admin extends Theme_My_Login_Abstract {
 		$lockout_duration_unit .= '</select>';
 
 		// Output them all
-		printf( __( 'After %1$s failed login attempts within %2$s %3$s, lockout the account for %4$s %5$s.', 'theme-my-login' ), $threshold, $threshold_duration, $threshold_duration_unit, $lockout_duration, $lockout_duration_unit );
+		printf( __( 'After %1$s failed login attempts within %2$s %3$s, lockout the account for %4$s %5$s.', 'easy-user-profile' ), $threshold, $threshold_duration, $threshold_duration_unit, $lockout_duration, $lockout_duration_unit );
 	}
 
 	/**
@@ -238,10 +238,10 @@ class Theme_My_Login_Security_Admin extends Theme_My_Login_Abstract {
 			$user = isset( $_GET['user'] ) ? $_GET['user'] : '';
 
 			if ( ! $user || ! current_user_can( 'edit_user', $user ) )
-				wp_die( __( 'You can&#8217;t edit that user.', 'theme-my-login' ) );
+				wp_die( __( 'You can&#8217;t edit that user.', 'easy-user-profile' ) );
 
 			if ( ! $user = get_userdata( $user ) )
-				wp_die( __( 'You can&#8217;t edit that user.', 'theme-my-login' ) );
+				wp_die( __( 'You can&#8217;t edit that user.', 'easy-user-profile' ) );
 
 			if ( 'lock' == $_GET['action'] ) {
 				check_admin_referer( 'lock-user_' . $user->ID );
@@ -273,9 +273,9 @@ class Theme_My_Login_Security_Admin extends Theme_My_Login_Abstract {
 	public function admin_notices() {
 		if ( isset( $_GET['update'] ) ) {
 			if ( 'lock' == $_GET['update'] )
-				echo '<div id="message" class="updated fade"><p>' . __( 'User locked.',   'theme-my-login' ) . '</p></div>';
+				echo '<div id="message" class="updated fade"><p>' . __( 'User locked.',   'easy-user-profile' ) . '</p></div>';
 			elseif ( 'unlock' == $_GET['update'] )
-				echo '<div id="message" class="updated fade"><p>' . __( 'User unlocked.', 'theme-my-login' ) . '</p></div>';
+				echo '<div id="message" class="updated fade"><p>' . __( 'User unlocked.', 'easy-user-profile' ) . '</p></div>';
 		}
 	}
 
@@ -298,9 +298,9 @@ class Theme_My_Login_Security_Admin extends Theme_My_Login_Abstract {
 
 		if ( $current_user->ID != $user_object->ID ) {
 			if ( isset( $security_meta['is_locked'] ) && $security_meta['is_locked'] )
-				$new_actions['unlock-user'] = '<a href="' . add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER['REQUEST_URI'] ) ) ), wp_nonce_url( "users.php?action=unlock&amp;user=$user_object->ID", "unlock-user_$user_object->ID" ) ) . '">' . __( 'Unlock', 'theme-my-login' ) . '</a>';
+				$new_actions['unlock-user'] = '<a href="' . add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER['REQUEST_URI'] ) ) ), wp_nonce_url( "users.php?action=unlock&amp;user=$user_object->ID", "unlock-user_$user_object->ID" ) ) . '">' . __( 'Unlock', 'easy-user-profile' ) . '</a>';
 			else
-				$new_actions['lock-user'] = '<a href="' . add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER['REQUEST_URI'] ) ) ), wp_nonce_url( "users.php?action=lock&amp;user=$user_object->ID", "lock-user_$user_object->ID" ) ) . '">' . __( 'Lock', 'theme-my-login' ) . '</a>';
+				$new_actions['lock-user'] = '<a href="' . add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER['REQUEST_URI'] ) ) ), wp_nonce_url( "users.php?action=lock&amp;user=$user_object->ID", "lock-user_$user_object->ID" ) ) . '">' . __( 'Lock', 'easy-user-profile' ) . '</a>';
 			$actions = array_merge( $new_actions, $actions );
 		}
 		return $actions;

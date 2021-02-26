@@ -91,8 +91,8 @@ class Theme_My_Login_Custom_User_Links_Admin extends Theme_My_Login_Abstract {
 
 		add_submenu_page(
 			'theme_my_login',
-			__( 'Theme My Login Custom User Links Settings', 'theme-my-login' ),
-			__( 'User Links', 'theme-my-login' ),
+			__( 'Theme My Login Custom User Links Settings', 'easy-user-profile' ),
+			__( 'User Links', 'easy-user-profile' ),
 			'manage_options',
 			$this->options_key,
 			array( $this, 'settings_page' )
@@ -119,7 +119,7 @@ class Theme_My_Login_Custom_User_Links_Admin extends Theme_My_Login_Abstract {
 	/**
 	 * Loads admin styles and scripts
 	 *
-	 * Callback for "load-settings_page_theme-my-login" hook in file "wp-admin/admin.php"
+	 * Callback for "load-settings_page_easy-user-profile" hook in file "wp-admin/admin.php"
 	 *
 	 * @since 6.0
 	 * @access public
@@ -141,7 +141,7 @@ class Theme_My_Login_Custom_User_Links_Admin extends Theme_My_Login_Abstract {
 		global $current_screen;
 		?>
 		<div class="wrap">
-			<h2><?php esc_html_e( 'Theme My Login Custom User Links Settings', 'theme-my-login' ); ?></h2>
+			<h2><?php esc_html_e( 'Theme My Login Custom User Links Settings', 'easy-user-profile' ); ?></h2>
 			<?php settings_errors(); ?>
 
 			<form method="post" action="options.php">
@@ -178,8 +178,8 @@ class Theme_My_Login_Custom_User_Links_Admin extends Theme_My_Login_Abstract {
 	<table id="<?php echo $role; ?>-link-table"<?php if ( empty( $links ) ) echo ' style="display: none;"'; ?> class="sortable user-links">
 		<thead>
 		<tr>
-			<th class="left"><?php _e( 'Title', 'theme-my-login' ); ?></th>
-			<th><?php _e( 'URL', 'theme-my-login' ); ?></th>
+			<th class="left"><?php _e( 'Title', 'easy-user-profile' ); ?></th>
+			<th><?php _e( 'URL', 'easy-user-profile' ); ?></th>
 			<th></th>
 		</tr>
 		</thead>
@@ -202,7 +202,7 @@ class Theme_My_Login_Custom_User_Links_Admin extends Theme_My_Login_Abstract {
 		<td class="left"><input id="new_user_link[<?php echo $role; ?>][title]" name="new_user_link[<?php echo $role; ?>][title]" type="text" size="20" /></td>
 		<td class="center"><input id="new_user_link[<?php echo $role; ?>][url]" name="new_user_link[<?php echo $role; ?>][url]" type="text" size="20" /></td>
 		<td class="submit">
-			<?php submit_button( __( 'Add Link', 'theme-my-login' ), "add:$role-link-list:new-$role-link", "add_new_user_link[$role]", false, array( 'id' => "new-$role-link-submit", 'data-wp-lists' => "add:$role-link-list:new-$role-link" ) ); ?>
+			<?php submit_button( __( 'Add Link', 'easy-user-profile' ), "add:$role-link-list:new-$role-link", "add_new_user_link[$role]", false, array( 'id' => "new-$role-link-submit", 'data-wp-lists' => "add:$role-link-list:new-$role-link" ) ); ?>
 			<?php wp_nonce_field( 'add-user-link', '_ajax_nonce-add-user-link', false ); ?>
 		</td>
 	</tr>
@@ -228,13 +228,13 @@ class Theme_My_Login_Custom_User_Links_Admin extends Theme_My_Login_Abstract {
 		$update_nonce = wp_create_nonce( 'add-user-link' );
 
 		$r .= "\n\t\t<tr id='$role-link-{$link['id']}'>";
-		$r .= "\n\t\t\t<td class='left'><label class='screen-reader-text' for='user_links[$role][{$link['id']}][title]'>" . __( 'Title', 'theme-my-login' ) . "</label><input name='user_links[$role][{$link['id']}][title]' id='user_links[$role][{$link['id']}][title]' type='text' size='20' value='{$link['title']}' /></td>";
-		$r .= "\n\t\t\t<td class='center'><label class='screen-reader-text' for='user_links[$role][{$link['id']}][url]'>" . __( 'URL', 'theme-my-login' ) . "</label><input name='user_links[$role][{$link['id']}][url]' id='user_links[$role][{$link['id']}][url]' type='text' size='20' value='{$link['url']}' /></td>";
+		$r .= "\n\t\t\t<td class='left'><label class='screen-reader-text' for='user_links[$role][{$link['id']}][title]'>" . __( 'Title', 'easy-user-profile' ) . "</label><input name='user_links[$role][{$link['id']}][title]' id='user_links[$role][{$link['id']}][title]' type='text' size='20' value='{$link['title']}' /></td>";
+		$r .= "\n\t\t\t<td class='center'><label class='screen-reader-text' for='user_links[$role][{$link['id']}][url]'>" . __( 'URL', 'easy-user-profile' ) . "</label><input name='user_links[$role][{$link['id']}][url]' id='user_links[$role][{$link['id']}][url]' type='text' size='20' value='{$link['url']}' /></td>";
 		$r .= "\n\t\t\t<td class='submit'>";
 		$r .= "\n\t\t\t\t";
-		$r .= get_submit_button( __( 'Delete', 'theme-my-login' ), "delete:$role-link-list:$role-link-{$link['id']}::_ajax_nonce=$delete_nonce deletelink", "deletelink[{$link['id']}]", false, array( 'data-wp-lists' => "delete:$role-link-list:$role-link-{$link['id']}::_ajax_nonce=$delete_nonce" ) );
+		$r .= get_submit_button( __( 'Delete', 'easy-user-profile' ), "delete:$role-link-list:$role-link-{$link['id']}::_ajax_nonce=$delete_nonce deletelink", "deletelink[{$link['id']}]", false, array( 'data-wp-lists' => "delete:$role-link-list:$role-link-{$link['id']}::_ajax_nonce=$delete_nonce" ) );
 		$r .= "\n\t\t\t\t";
-		$r .= get_submit_button( __( 'Update', 'theme-my-login' ), "add:$role-link-list:$role-link-{$link['id']}::_ajax_nonce-add-user-link=$update_nonce updatelink", "$role-link-{$link['id']}-submit", false, array( 'data-wp-lists' => "add:$role-link-list:$role-link-{$link['id']}::_ajax_nonce-add-user-link=$update_nonce" ) );
+		$r .= get_submit_button( __( 'Update', 'easy-user-profile' ), "add:$role-link-list:$role-link-{$link['id']}::_ajax_nonce-add-user-link=$update_nonce updatelink", "$role-link-{$link['id']}-submit", false, array( 'data-wp-lists' => "add:$role-link-list:$role-link-{$link['id']}::_ajax_nonce-add-user-link=$update_nonce" ) );
 		$r .= "\n\t\t\t\t";
 		$r .= wp_nonce_field( 'change-user-link', '_ajax_nonce', false, false );
 		$r .= "\n\t\t\t</td>";

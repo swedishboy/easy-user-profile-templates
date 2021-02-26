@@ -65,7 +65,7 @@ class Theme_My_Login_Admin extends Theme_My_Login_Abstract {
 		}
 		add_action( 'upgrader_pre_install', array( $this, 'upgrader_pre_install' ), 0, 2 );
 
-		register_uninstall_hook( THEME_MY_LOGIN_PATH . '/theme-my-login.php', array( 'Theme_My_Login_Admin', 'uninstall' ) );
+		register_uninstall_hook( THEME_MY_LOGIN_PATH . '/easy-user-profile.php', array( 'Theme_My_Login_Admin', 'uninstall' ) );
 	}
 
 	/**
@@ -76,8 +76,8 @@ class Theme_My_Login_Admin extends Theme_My_Login_Abstract {
 	 */
 	public function admin_menu() {
 		add_menu_page(
-			__( 'Theme My Login Settings', 'theme-my-login' ),
-			__( 'TML', 'theme-my-login' ),
+			__( 'Theme My Login Settings', 'easy-user-profile' ),
+			__( 'TML', 'easy-user-profile' ),
 			'manage_options',
 			'theme_my_login',
 			array( 'Theme_My_Login_Admin', 'settings_page' )
@@ -85,8 +85,8 @@ class Theme_My_Login_Admin extends Theme_My_Login_Abstract {
 
 		add_submenu_page(
 			'theme_my_login',
-			__( 'General', 'theme-my-login' ),
-			__( 'General', 'theme-my-login' ),
+			__( 'General', 'easy-user-profile' ),
+			__( 'General', 'easy-user-profile' ),
 			'manage_options',
 			'theme_my_login',
 			array( 'Theme_My_Login_Admin', 'settings_page' )
@@ -111,15 +111,15 @@ class Theme_My_Login_Admin extends Theme_My_Login_Abstract {
 			$this->install();
 
 		// Add sections
-		add_settings_section( 'general', __( 'General', 'theme-my-login' ), '__return_false',                          $this->options_key );
-		add_settings_section( 'modules', __( 'Modules', 'theme-my-login' ), '__return_false',                          $this->options_key );
-		add_settings_section( 'update',  __( 'Update',  'theme-my-login' ), array( $this, 'settings_section_update' ), $this->options_key );
+		add_settings_section( 'general', __( 'General', 'easy-user-profile' ), '__return_false',                          $this->options_key );
+		add_settings_section( 'modules', __( 'Modules', 'easy-user-profile' ), '__return_false',                          $this->options_key );
+		add_settings_section( 'update',  __( 'Update',  'easy-user-profile' ), array( $this, 'settings_section_update' ), $this->options_key );
 
 		// Add fields
-		add_settings_field( 'enable_css', __( 'Stylesheet', 'theme-my-login' ), array( $this, 'settings_field_enable_css' ), $this->options_key, 'general' );
-		add_settings_field( 'login_type', __( 'Login Type', 'theme-my-login' ), array( $this, 'settings_field_login_type' ), $this->options_key, 'general' );
-		add_settings_field( 'modules',    __( 'Modules',    'theme-my-login' ), array( $this, 'settings_field_modules'    ), $this->options_key, 'modules' );
-		add_settings_field( 'update',     __( 'Update',     'theme-my-login' ), array( $this, 'settings_field_update'     ), $this->options_key, 'update'  );
+		add_settings_field( 'enable_css', __( 'Stylesheet', 'easy-user-profile' ), array( $this, 'settings_field_enable_css' ), $this->options_key, 'general' );
+		add_settings_field( 'login_type', __( 'Login Type', 'easy-user-profile' ), array( $this, 'settings_field_login_type' ), $this->options_key, 'general' );
+		add_settings_field( 'modules',    __( 'Modules',    'easy-user-profile' ), array( $this, 'settings_field_modules'    ), $this->options_key, 'modules' );
+		add_settings_field( 'update',     __( 'Update',     'easy-user-profile' ), array( $this, 'settings_field_update'     ), $this->options_key, 'update'  );
 	}
 
 	/**
@@ -129,8 +129,8 @@ class Theme_My_Login_Admin extends Theme_My_Login_Abstract {
 	 * @access public
 	 */
 	public function admin_enqueue_scripts() {
-		wp_enqueue_script( 'theme-my-login-admin', plugins_url( 'js/theme-my-login-admin.js', __FILE__ ), array( 'jquery' ), Theme_My_Login::VERSION, true );
-		wp_localize_script( 'theme-my-login-admin', 'tmlAdmin', array(
+		wp_enqueue_script( 'easy-user-profile-admin', plugins_url( 'js/easy-user-profile-admin.js', __FILE__ ), array( 'jquery' ), Theme_My_Login::VERSION, true );
+		wp_localize_script( 'easy-user-profile-admin', 'tmlAdmin', array(
 			'interim_login_url' => site_url( 'wp-login.php?interim-login=1', 'login' )
 		) );
 	}
@@ -143,30 +143,31 @@ class Theme_My_Login_Admin extends Theme_My_Login_Abstract {
 	 * @return [type] [description]
 	 */
 	public function admin_notices() {
-		$dismissed_notices = $this->get_option( 'dismissed_notices', array() );
+		$dismissed_notices = $this->get_option( 'eupt_dismissed_notices', array() );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
 
-		if ( ! in_array( '7', $dismissed_notices ) ) {
+/*		if ( ! in_array( '7', $dismissed_notices ) ) {
 			?>
 
 			<div class="notice notice-info tml-notice is-dismissible" data-notice="7">
 				<p>
-					<?php _e( '<strong>Heads up!</strong> Theme My Login 7 is right around the corner and some major changes are coming!', 'theme-my-login' ); ?>
+					<?php _e( '<strong>Heads up!</strong> Theme My Login 7 is right around the corner and some major changes are coming!', 'easy-user-profile' ); ?>
 					<br /><br />
-					<?php _e( 'Most notably, all of the previously included modules (with the exception of Custom Passwords, which has been merged into the core plugin) have been removed.', 'theme-my-login' ); ?>
-					<?php _e( 'Instead, all of the legacy modules (now called "Extensions"), with many more to come, can now be purchased at our <a href="https://thememylogin.com/extensions">extensions store</a>.', 'theme-my-login' ); ?>
+					<?php _e( 'Most notably, all of the previously included modules (with the exception of Custom Passwords, which has been merged into the core plugin) have been removed.', 'easy-user-profile' ); ?>
+					<?php _e( 'Instead, all of the legacy modules (now called "Extensions"), with many more to come, can now be purchased at our <a href="https://thememylogin.com/extensions">extensions store</a>.', 'easy-user-profile' ); ?>
 					<br /><br />
-					<?php _e( "It's not all bad news though! As a legacy user, we're offering you a discount for a limited time. Use discount code <strong>SAVINGFACE</strong> at checkout in order to receive <strong>20% off</strong> of your purchase!", 'theme-my-login' ); ?>
+					<?php _e( "It's not all bad news though! As a legacy user, we're offering you a discount for a limited time. Use discount code <strong>SAVINGFACE</strong> at checkout in order to receive <strong>20% off</strong> of your purchase!", 'easy-user-profile' ); ?>
 					<br /><br />
-					<a class="button button-primary" href="https://thememylogin.com/extensions" target="_blank"><?php _e( 'Take Me To The Store', 'theme-my-login' ); ?></a>
+					<a class="button button-primary" href="https://thememylogin.com/extensions" target="_blank"><?php _e( 'Take Me To The Store', 'easy-user-profile' ); ?></a>
 				</p>
 			</div>
 
 			<?php
 		}
+*/
 	}
 
 	/**
@@ -196,7 +197,7 @@ class Theme_My_Login_Admin extends Theme_My_Login_Abstract {
 	public function add_meta_boxes() {
 		add_meta_box(
 			'tml_action',
-			__( 'Theme My Login Action', 'theme-my-login' ),
+			__( 'Theme My Login Action', 'easy-user-profile' ),
 			array( $this, 'action_meta_box' ),
 			'page',
 			'side'
@@ -256,7 +257,7 @@ class Theme_My_Login_Admin extends Theme_My_Login_Abstract {
 	 */
 	public static function settings_page( $args = '' ) {
 		extract( wp_parse_args( $args, array(
-			'title'       => __( 'Theme My Login Settings', 'theme-my-login' ),
+			'title'       => __( 'Theme My Login Settings', 'easy-user-profile' ),
 			'options_key' => 'theme_my_login'
 		) ) );
 		?>
@@ -284,8 +285,8 @@ class Theme_My_Login_Admin extends Theme_My_Login_Abstract {
 	public function settings_field_enable_css() {
 		?>
 		<input name="theme_my_login[enable_css]" type="checkbox" id="theme_my_login_enable_css" value="1"<?php checked( 1, $this->get_option( 'enable_css' ) ); ?> />
-		<label for="theme_my_login_enable_css"><?php _e( 'Enable "theme-my-login.css"', 'theme-my-login' ); ?></label>
-		<p class="description"><?php _e( 'In order to keep changes between upgrades, you can store your customized "theme-my-login.css" in your current theme directory.', 'theme-my-login' ); ?></p>
+		<label for="theme_my_login_enable_css"><?php _e( 'Enable "easy-user-profile.css"', 'easy-user-profile' ); ?></label>
+		<p class="description"><?php _e( 'In order to keep changes between upgrades, you can store your customized "easy-user-profile.css" in your current theme directory.', 'easy-user-profile' ); ?></p>
 		<?php
 	}
 
@@ -301,17 +302,17 @@ class Theme_My_Login_Admin extends Theme_My_Login_Abstract {
 		<ul>
 
 			<li><input name="theme_my_login[login_type]" type="radio" id="theme_my_login_login_type_default" value="default"<?php checked( 'default', $this->get_option( 'login_type' ) ); ?> />
-			<label for="theme_my_login_login_type_default"><?php _e( 'Username or E-mail', 'theme-my-login' ); ?></label></li>
+			<label for="theme_my_login_login_type_default"><?php _e( 'Username or E-mail', 'easy-user-profile' ); ?></label></li>
 
 			<li><input name="theme_my_login[login_type]" type="radio" id="theme_my_login_login_type_username" value="username"<?php checked( 'username', $this->get_option( 'login_type' ) ); ?> />
-			<label for="theme_my_login_login_type_username"><?php _e( 'Username only', 'theme-my-login' ); ?></label></li>
+			<label for="theme_my_login_login_type_username"><?php _e( 'Username only', 'easy-user-profile' ); ?></label></li>
 
 			<li><input name="theme_my_login[login_type]" type="radio" id="theme_my_login_login_type_email" value="email"<?php checked( 'email', $this->get_option( 'login_type' ) ); ?> />
-			<label for="theme_my_login_login_type_email"><?php _e( 'E-mail only', 'theme-my-login' ); ?></label></li>
+			<label for="theme_my_login_login_type_email"><?php _e( 'E-mail only', 'easy-user-profile' ); ?></label></li>
 
 		</ul>
 
-		<p class="description"><?php _e( 'Allow users to login using their username and/or e-mail address.', 'theme-my-login' ); ?></p>
+		<p class="description"><?php _e( 'Allow users to login using their username and/or e-mail address.', 'easy-user-profile' ); ?></p>
 
 		<?php
 	}
@@ -327,7 +328,7 @@ class Theme_My_Login_Admin extends Theme_My_Login_Abstract {
 			$id = sanitize_key( $data['Name'] );
 		?>
 		<input name="theme_my_login[active_modules][]" type="checkbox" id="theme_my_login_active_modules_<?php echo $id; ?>" value="<?php echo $path; ?>"<?php checked( in_array( $path, (array) $this->get_option( 'active_modules' ) ) ); ?> />
-		<label for="theme_my_login_active_modules_<?php echo $id; ?>"><?php printf( __( 'Enable %s', 'theme-my-login' ), $data['Name'] ); ?></label><br />
+		<label for="theme_my_login_active_modules_<?php echo $id; ?>"><?php printf( __( 'Enable %s', 'easy-user-profile' ), $data['Name'] ); ?></label><br />
 		<?php if ( $data['Description'] ) : ?>
 		<p class="description"><?php echo $data['Description']; ?></p>
 		<?php endif;
@@ -343,32 +344,32 @@ class Theme_My_Login_Admin extends Theme_My_Login_Abstract {
 		?>
 
 		<p><?php echo implode( ' ', array(
-			__( 'Please read the following carefully!', 'theme-my-login' ),
-			__( 'Theme My Login version 7.0+ contains major changes that can possibly break some sites. In order to protect your site from potentially breaking, we are requiring you to opt-in to receive the update.', 'theme-my-login' ),
-			__( 'So that we may help you understand some of these changes, we will go over them below.', 'theme-my-login' ),
+			__( 'Please read the following carefully!', 'easy-user-profile' ),
+			__( 'Theme My Login version 7.0+ contains major changes that can possibly break some sites. In order to protect your site from potentially breaking, we are requiring you to opt-in to receive the update.', 'easy-user-profile' ),
+			__( 'So that we may help you understand some of these changes, we will go over them below.', 'easy-user-profile' ),
 		) ); ?>
 
-		<h3><?php _e( 'Modules will no longer be included with the plugin', 'theme-my-login' ); ?></h3>
+		<h3><?php _e( 'Modules will no longer be included with the plugin', 'easy-user-profile' ); ?></h3>
 
 		<p><?php echo implode( ' ', array(
-			__( 'With the exception of Custom Passwords (merged into the core plugin) and Custom User Links (discontinued), all of the modules listed above are now available in <a href="https://thememylogin.com/extensions">our store</a>.', 'theme-my-login' ),
-			__( 'If you update, you will need to purchase a license to use the new extensions.', 'theme-my-login' ),
-			__( 'Most of these extensions have been completely rewritten and contain additional features not found in the 6.4.x modules.', 'theme-my-login' ),
-			'<strong>' . __( 'If you are not using any of the above modules, this change will not affect you.', 'theme-my-login' ) . '</strong>',
+			__( 'With the exception of Custom Passwords (merged into the core plugin) and Custom User Links (discontinued), all of the modules listed above are now available in <a href="https://thememylogin.com/extensions">our store</a>.', 'easy-user-profile' ),
+			__( 'If you update, you will need to purchase a license to use the new extensions.', 'easy-user-profile' ),
+			__( 'Most of these extensions have been completely rewritten and contain additional features not found in the 6.4.x modules.', 'easy-user-profile' ),
+			'<strong>' . __( 'If you are not using any of the above modules, this change will not affect you.', 'easy-user-profile' ) . '</strong>',
 		) ); ?></p>
 
-		<h3><?php _e( 'Templates will no longer be utilized by the plugin', 'theme-my-login' ); ?></h3>
+		<h3><?php _e( 'Templates will no longer be utilized by the plugin', 'easy-user-profile' ); ?></h3>
 
 		<p><?php echo implode( ' ', array(
-			__( 'In order to simplify the way the plugin generates forms, templates are no longer used. Instead, the forms are generated procedurally in PHP code. This makes it much easier to add, edit and rearrange form fields and leads to less complexity.', 'theme-my-login' ),
-			'<strong>' . __( 'If you are not using custom templates for any actions, this change will not affect you.', 'theme-my-login' ) . '</strong>',
+			__( 'In order to simplify the way the plugin generates forms, templates are no longer used. Instead, the forms are generated procedurally in PHP code. This makes it much easier to add, edit and rearrange form fields and leads to less complexity.', 'easy-user-profile' ),
+			'<strong>' . __( 'If you are not using custom templates for any actions, this change will not affect you.', 'easy-user-profile' ) . '</strong>',
 		) ); ?></p>
 
-		<h3><?php _e( 'The plugin will no longer use WordPress pages to represent actions', 'theme-my-login' ); ?></h3>
+		<h3><?php _e( 'The plugin will no longer use WordPress pages to represent actions', 'easy-user-profile' ); ?></h3>
 
 		<p><?php echo implode( ' ', array(
-			__( 'Instead of using "real" pages, they are generated "on-the-fly", that is, as needed, when the corresponding action is requested. This eliminates clutter and avoids the accidental deletion of pages that represent actions.', 'theme-my-login' ),
-			'<strong>' . __( 'If you have not added anything to the pages that the plugin created, this change will not affect you.', 'theme-my-login' ) . '</strong>',
+			__( 'Instead of using "real" pages, they are generated "on-the-fly", that is, as needed, when the corresponding action is requested. This eliminates clutter and avoids the accidental deletion of pages that represent actions.', 'easy-user-profile' ),
+			'<strong>' . __( 'If you have not added anything to the pages that the plugin created, this change will not affect you.', 'easy-user-profile' ) . '</strong>',
 		) ); ?></p>
 
 		<?php
@@ -384,12 +385,12 @@ class Theme_My_Login_Admin extends Theme_My_Login_Abstract {
 
 		<p>
 			<input name="theme_my_login[allow_update]" type="radio" id="theme_my_login_allow_update_on" value="1"<?php checked( (bool) $this->get_option( 'allow_update' ) ); ?> />
-			<label for="theme_my_login_allow_update_on"><?php _e( 'I understand the possible consequences, but I want the latest features and wish to allow the update', 'theme-my-login' ); ?></label>
+			<label for="theme_my_login_allow_update_on"><?php _e( 'I understand the possible consequences, but I want the latest features and wish to allow the update', 'easy-user-profile' ); ?></label>
 		</p>
 
 		<p>
 			<input name="theme_my_login[allow_update]" type="radio" id="theme_my_login_allow_update_off" value="0"<?php checked( ! $this->get_option( 'allow_update' ) ); ?> />
-			<label for="theme_my_login_allow_update_off"><?php _e( 'I understand that I will no longer receive any new features but I would like to stay on the 6.4 branch anyway', 'theme-my-login' ); ?></label>
+			<label for="theme_my_login_allow_update_off"><?php _e( 'I understand that I will no longer receive any new features but I would like to stay on the 6.4 branch anyway', 'easy-user-profile' ); ?></label>
 		</p>
 
 		<?php
@@ -442,7 +443,7 @@ class Theme_My_Login_Admin extends Theme_My_Login_Abstract {
 	 * @return object The transient data.
 	 */
 	public function pre_set_site_transient_update_plugins( $transient = '' ) {
-		$basename = 'theme-my-login/theme-my-login.php';
+		$basename = 'easy-user-profile/easy-user-profile.php';
 
 		if ( ! is_object( $transient ) ) {
 			$transient = new stdClass;
@@ -464,7 +465,7 @@ class Theme_My_Login_Admin extends Theme_My_Login_Abstract {
 
 		require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
 
-		$plugin_info = plugins_api( 'plugin_information', array( 'slug' => 'theme-my-login' ) );
+		$plugin_info = plugins_api( 'plugin_information', array( 'slug' => 'easy-user-profile' ) );
 		if ( is_wp_error( $plugin_info ) ) {
 			return $transient;
 		}
@@ -509,7 +510,7 @@ class Theme_My_Login_Admin extends Theme_My_Login_Abstract {
 			return $response;
 		}
 
-		$basename = plugin_basename( THEME_MY_LOGIN_PATH . '/theme-my-login.php' );
+		$basename = plugin_basename( THEME_MY_LOGIN_PATH . '/easy-user-profile.php' );
 
 		// Bal if we're not upgrading TML
 		if ( $basename != $args['plugin'] ) {
@@ -529,7 +530,7 @@ class Theme_My_Login_Admin extends Theme_My_Login_Abstract {
 		}
 
 		return new WP_Error( 'update_denied', sprintf(
-			__( 'Theme My Login has not been updated because you have not allowed the update on the <a href="%s" target="_top">settings page</a>.', 'theme-my-login' ),
+			__( 'Theme My Login has not been updated because you have not allowed the update on the <a href="%s" target="_top">settings page</a>.', 'easy-user-profile' ),
 			admin_url( 'admin.php?page=theme_my_login' )
 		) );
 	}
@@ -562,7 +563,7 @@ class Theme_My_Login_Admin extends Theme_My_Login_Abstract {
 		if ( version_compare( $version, '6.0', '<' ) ) {
 			// Replace shortcode
 			if ( $page ) {
-				$page->post_content = str_replace( '[theme-my-login-page]', '[theme-my-login]', $page->post_content );
+				$page->post_content = str_replace( '[easy-user-profile-page]', '[easy-user-profile]', $page->post_content );
 				wp_update_post( $page );
 			}
 		}
@@ -635,7 +636,7 @@ class Theme_My_Login_Admin extends Theme_My_Login_Abstract {
 					'post_name'      => $action,
 					'post_status'    => 'publish',
 					'post_type'      => 'page',
-					'post_content'   => '[theme-my-login]',
+					'post_content'   => '[easy-user-profile]',
 					'comment_status' => 'closed',
 					'ping_status'    => 'closed'
 				) );
@@ -712,7 +713,7 @@ class Theme_My_Login_Admin extends Theme_My_Login_Abstract {
 
 		// Delete options
 		delete_option( 'theme_my_login' );
-		delete_option( 'widget_theme-my-login' );
+		delete_option( 'widget_easy-user-profile' );
 	}
 }
 endif; // Class exists

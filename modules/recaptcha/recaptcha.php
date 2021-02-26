@@ -107,15 +107,15 @@ class Theme_My_Login_Recaptcha extends Theme_My_Login_Abstract {
 			switch ( $error_code ) {
 				case 'missing-input-secret' :
 				case 'invalid-input-secret' :
-					$errors->add( 'recaptcha', __( '<strong>ERROR</strong>: Invalid reCAPTCHA secret key.', 'theme-my-login' ), $error_code );
+					$errors->add( 'recaptcha', __( '<strong>ERROR</strong>: Invalid reCAPTCHA secret key.', 'easy-user-profile' ), $error_code );
 					break;
 				case 'missing-input-response' :
 				case 'invalid-input-response' :
-					$errors->add( 'recaptcha', __( '<strong>ERROR</strong>: Please check the box to prove that you are not a robot.', 'theme-my-login' ), $error_code );
+					$errors->add( 'recaptcha', __( '<strong>ERROR</strong>: Please check the box to prove that you are not a robot.', 'easy-user-profile' ), $error_code );
 					break;
 				case 'recaptcha-not-reachable' :
 				default :
-					$errors->add( 'recaptcha', __( '<strong>ERROR</strong>: Unable to reach the reCAPTCHA server.', 'theme-my-login' ), $error_code );
+					$errors->add( 'recaptcha', __( '<strong>ERROR</strong>: Unable to reach the reCAPTCHA server.', 'easy-user-profile' ), $error_code );
 					break;
 			}
 		}

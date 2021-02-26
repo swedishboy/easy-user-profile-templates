@@ -51,7 +51,7 @@ As of version 6.3, Theme My Login no longer ships with translation files. Transl
 
 = How do I obtain additional assistance? =
 
-Please visit https://wordpress.org/support/plugin/theme-my-login.
+Please visit https://wordpress.org/support/plugin/easy-user-profile.
 
 
 == Changelog ==
@@ -370,10 +370,10 @@ Please visit https://wordpress.org/support/plugin/theme-my-login.
 * Remove accidental invalid characters
 
 = 5.0.5 =
-* Add 'theme-my-login-page' shortcode before 'theme-my-login' shortcode
+* Add 'easy-user-profile-page' shortcode before 'easy-user-profile' shortcode
 
 = 5.0.4 =
-* Re-introduce 'theme-my-login-page' shortcode for main login page
+* Re-introduce 'easy-user-profile-page' shortcode for main login page
 * Add French translation
 * Fix typo in function override notice functions
 * Make 2nd argument optional in 'get_pages' filter
@@ -406,7 +406,7 @@ Please visit https://wordpress.org/support/plugin/theme-my-login.
 = 4.4 =
 * Added the option to require new registrations to confirm e-mail address
 * Added the option to redirect users upon log out according to their role
-* Allow 'theme-my-login.css' to be loaded from current theme directory
+* Allow 'easy-user-profile.css' to be loaded from current theme directory
 * Cleaned up and rewrote most code
 * Drop support for WP versions below 2.8
 

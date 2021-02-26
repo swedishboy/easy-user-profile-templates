@@ -150,27 +150,27 @@ class Theme_My_Login_Template extends Theme_My_Login_Abstract {
 			return;
 
 		if ( is_user_logged_in() && 'login' == $action && $action == $this->get_option( 'default_action' ) ) {
-			$title = sprintf( __( 'Welcome, %s', 'theme-my-login' ), wp_get_current_user()->display_name );
+			$title = sprintf( __( 'Welcome, %s', 'easy-user-profile' ), wp_get_current_user()->display_name );
 		} else {
 			if ( $page_id = Theme_My_Login::get_page_id( $action ) ) {
 				$title = get_post_field( 'post_title', $page_id );
 			} else {
 				switch ( $action ) {
 					case 'register':
-						$title = __( 'Register', 'theme-my-login' );
+						$title = __( 'Register', 'easy-user-profile' );
 						break;
 					case 'lostpassword':
 					case 'retrievepassword':
 					case 'resetpass':
 					case 'rp':
-						$title = __( 'Lost Password', 'theme-my-login' );
+						$title = __( 'Lost Password', 'easy-user-profile' );
 						break;
 					case 'confirmaction':
-						$title = __( 'Your Data Request', 'theme-my-login' );
+						$title = __( 'Your Data Request', 'easy-user-profile' );
 						break;
 					case 'login':
 					default:
-						$title = __( 'Log In', 'theme-my-login' );
+						$title = __( 'Log In', 'easy-user-profile' );
 				}
 			}
 		}
@@ -351,10 +351,10 @@ class Theme_My_Login_Template extends Theme_My_Login_Abstract {
 	public static function get_user_links() {
 		$user_links = array(
 			array(
-				'title' => __( 'Dashboard', 'theme-my-login' ),
+				'title' => __( 'Dashboard', 'easy-user-profile' ),
 				'url'   => admin_url() ),
 			array(
-				'title' => __( 'Profile', 'theme-my-login' ),
+				'title' => __( 'Profile', 'easy-user-profile' ),
 				'url'   => admin_url( 'profile.php' )
 			)
 		);
@@ -403,13 +403,13 @@ class Theme_My_Login_Template extends Theme_My_Login_Abstract {
 	public static function get_action_template_message( $action = '' ) {
 		switch ( $action ) {
 			case 'register':
-				$message = __( 'Register For This Site', 'theme-my-login' );
+				$message = __( 'Register For This Site', 'easy-user-profile' );
 				break;
 			case 'lostpassword':
-				$message = __( 'Please enter your username or email address. You will receive a link to create a new password via email.', 'theme-my-login' );
+				$message = __( 'Please enter your username or email address. You will receive a link to create a new password via email.', 'easy-user-profile' );
 				break;
 			case 'resetpass':
-				$message = __( 'Enter your new password below.', 'theme-my-login' );
+				$message = __( 'Enter your new password below.', 'easy-user-profile' );
 				break;
 			default:
 				$message = '';
@@ -458,9 +458,9 @@ class Theme_My_Login_Template extends Theme_My_Login_Abstract {
 		extract( apply_filters_ref_array( 'tml_template_args', array( $args, $this ) ) );
 
 		$template_paths = apply_filters( 'tml_template_paths', array(
-			get_stylesheet_directory() . '/theme-my-login',
+			get_stylesheet_directory() . '/easy-user-profile',
 			get_stylesheet_directory(),
-			get_template_directory() . '/theme-my-login',
+			get_template_directory() . '/easy-user-profile',
 			get_template_directory(),
 			THEME_MY_LOGIN_PATH . '/templates'
 		) );

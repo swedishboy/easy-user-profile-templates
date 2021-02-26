@@ -839,11 +839,11 @@ class Theme_My_Login_Custom_Email extends Theme_My_Login_Abstract {
 		$blogname = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
 
 		if ( apply_filters( 'send_new_user_admin_notification', true ) ) {
-			$message  = sprintf( __( 'New user registration on your site %s:', 'theme-my-login' ), $blogname   ) . "\r\n\r\n";
-			$message .= sprintf( __( 'Username: %s'                          , 'theme-my-login' ), $user->user_login ) . "\r\n\r\n";
-			$message .= sprintf( __( 'E-mail: %s'                            , 'theme-my-login' ), $user->user_email ) . "\r\n";
+			$message  = sprintf( __( 'New user registration on your site %s:', 'easy-user-profile' ), $blogname   ) . "\r\n\r\n";
+			$message .= sprintf( __( 'Username: %s'                          , 'easy-user-profile' ), $user->user_login ) . "\r\n\r\n";
+			$message .= sprintf( __( 'E-mail: %s'                            , 'easy-user-profile' ), $user->user_email ) . "\r\n";
 
-			$title    = sprintf( __( '[%s] New User Registration'            , 'theme-my-login' ), $blogname   );
+			$title    = sprintf( __( '[%s] New User Registration'            , 'easy-user-profile' ), $blogname   );
 
 			$title    = apply_filters( 'new_user_admin_notification_title',   $title,   $user_id );
 			$message  = apply_filters( 'new_user_admin_notification_message', $message, $user_id );
@@ -869,13 +869,13 @@ class Theme_My_Login_Custom_Email extends Theme_My_Login_Abstract {
 		$wpdb->update( $wpdb->users, array( 'user_activation_key' => $hashed ), array( 'user_login' => $user->user_login ) );
 
 		if ( apply_filters( 'send_new_user_notification', true ) ) {
-			$message  = sprintf( __( 'Username: %s', 'theme-my-login' ), $user->user_login     ) . "\r\n\r\n";
-			$message .= __( 'To set your password, visit the following address:', 'theme-my-login' ) . "\r\n\r\n";
+			$message  = sprintf( __( 'Username: %s', 'easy-user-profile' ), $user->user_login     ) . "\r\n\r\n";
+			$message .= __( 'To set your password, visit the following address:', 'easy-user-profile' ) . "\r\n\r\n";
 			$message .= '<' . network_site_url( "wp-login.php?action=rp&key=$key&login=" . rawurlencode( $user->user_login ), 'login' ) . ">\r\n\r\n";
 
 			$message .= wp_login_url() . "\r\n";
 
-			$title = sprintf( __( '[%s] Your username and password info', 'theme-my-login' ), $blogname );
+			$title = sprintf( __( '[%s] Your username and password info', 'easy-user-profile' ), $blogname );
 
 			$title   = apply_filters( 'new_user_notification_title',   $title,   $user_id       );
 			$message = apply_filters( 'new_user_notification_message', $message, $key, $user_id );
@@ -903,8 +903,8 @@ class Theme_My_Login_Custom_Email extends Theme_My_Login_Abstract {
 			// we want to reverse this for the plain text arena of emails.
 			$blogname = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
 
-			$title   = sprintf( __( '[%s] Password Lost/Changed'            , 'theme-my-login' ), $blogname         );
-			$message = sprintf( __( 'Password Lost and Changed for user: %s', 'theme-my-login' ), $user->user_login ) . "\r\n";
+			$title   = sprintf( __( '[%s] Password Lost/Changed'            , 'easy-user-profile' ), $blogname         );
+			$message = sprintf( __( 'Password Lost and Changed for user: %s', 'easy-user-profile' ), $user->user_login ) . "\r\n";
 
 			$title   = apply_filters( 'password_change_notification_title',   $title,   $user->ID );
 			$message = apply_filters( 'password_change_notification_message', $message, $user->ID );

@@ -125,11 +125,11 @@ class Theme_My_Login extends Theme_My_Login_Abstract {
 	 */
 	public static function default_pages() {
 		return apply_filters( 'tml_default_pages', array(
-			'login'        => __( 'Log In'        , 'theme-my-login' ),
-			'logout'       => __( 'Log Out'       , 'theme-my-login' ),
-			'register'     => __( 'Register'      , 'theme-my-login' ),
-			'lostpassword' => __( 'Lost Password' , 'theme-my-login' ),
-			'resetpass'    => __( 'Reset Password', 'theme-my-login' )
+			'login'        => __( 'Log In'        , 'easy-user-profile' ),
+			'logout'       => __( 'Log Out'       , 'easy-user-profile' ),
+			'register'     => __( 'Register'      , 'easy-user-profile' ),
+			'lostpassword' => __( 'Lost Password' , 'easy-user-profile' ),
+			'resetpass'    => __( 'Reset Password', 'easy-user-profile' )
 		) );
 	}
 
@@ -168,7 +168,7 @@ class Theme_My_Login extends Theme_My_Login_Abstract {
 		add_filter( 'page_link',              array( $this, 'page_link'              ), 10, 2 );
 		add_filter( 'authenticate',           array( $this, 'authenticate'           ), 20, 3 );
 
-		add_shortcode( 'theme-my-login', array( $this, 'shortcode' ) );
+		add_shortcode( 'easy-user-profile', array( $this, 'shortcode' ) );
 
 		if ( 'username' == $this->get_option( 'login_type' ) ) {
 			remove_filter( 'authenticate', 'wp_authenticate_email_password', 20 );
@@ -205,12 +205,12 @@ class Theme_My_Login extends Theme_My_Login_Abstract {
 	public function init() {
 		global $pagenow;
 
-		load_plugin_textdomain( 'theme-my-login', false, plugin_basename( THEME_MY_LOGIN_PATH ) . '/languages' );
+		load_plugin_textdomain( 'easy-user-profile', false, plugin_basename( THEME_MY_LOGIN_PATH ) . '/languages' );
 
 		$this->errors = new WP_Error();
 
 		if ( ! is_admin() && 'wp-login.php' != $pagenow && $this->get_option( 'enable_css' ) )
-			wp_enqueue_style( 'theme-my-login', self::get_stylesheet(), array( 'dashicons' ), $this->get_option( 'version' ) );
+			wp_enqueue_style( 'easy-user-profile', self::get_stylesheet(), array( 'dashicons' ), $this->get_option( 'version' ) );
 	}
 
 	/**
@@ -388,9 +388,9 @@ class Theme_My_Login extends Theme_My_Login_Abstract {
 
 					if ( isset( $_REQUEST['error'] ) ) {
 						if ( 'invalidkey' == $_REQUEST['error'] )
-							$this->errors->add( 'invalidkey', __( 'Your password reset link appears to be invalid. Please request a new link below.', 'theme-my-login' ) );
+							$this->errors->add( 'invalidkey', __( 'Your password reset link appears to be invalid. Please request a new link below.', 'easy-user-profile' ) );
 						elseif ( 'expiredkey' == $_REQUEST['error'] )
-							$this->errors->add( 'expiredkey', __( 'Your password reset link has expired. Please request a new link below.', 'theme-my-login' ) );
+							$this->errors->add( 'expiredkey', __( 'Your password reset link has expired. Please request a new link below.', 'easy-user-profile' ) );
 					}
 
 					do_action( 'lost_password' );
@@ -428,7 +428,7 @@ class Theme_My_Login extends Theme_My_Login_Abstract {
 					}
 
 					if ( isset( $_POST['pass1'] ) && $_POST['pass1'] != $_POST['pass2'] )
-						$this->errors->add( 'password_reset_mismatch', __( 'The passwords do not match.', 'theme-my-login' ) );
+						$this->errors->add( 'password_reset_mismatch', __( 'The passwords do not match.', 'easy-user-profile' ) );
 
 					do_action( 'validate_password_reset', $this->errors, $user );
 
@@ -579,23 +579,23 @@ class Theme_My_Login extends Theme_My_Login_Abstract {
 
 					if ( $interim_login ) {
 						if ( ! $errors->get_error_code() )
-							$errors->add( 'expired', __( 'Your session has expired. Please log in to continue where you left off.', 'theme-my-login' ), 'message' );
+							$errors->add( 'expired', __( 'Your session has expired. Please log in to continue where you left off.', 'easy-user-profile' ), 'message' );
 					} else {
 						// Some parts of this script use the main login form to display a message
 						if		( isset( $_GET['loggedout'] ) && true == $_GET['loggedout'] )
-							$this->errors->add( 'loggedout', __( 'You are now logged out.', 'theme-my-login' ), 'message' );
+							$this->errors->add( 'loggedout', __( 'You are now logged out.', 'easy-user-profile' ), 'message' );
 						elseif	( isset( $_GET['registration'] ) && 'disabled' == $_GET['registration'] )
-							$this->errors->add( 'registerdisabled', __( 'User registration is currently not allowed.', 'theme-my-login' ) );
+							$this->errors->add( 'registerdisabled', __( 'User registration is currently not allowed.', 'easy-user-profile' ) );
 						elseif	( isset( $_GET['checkemail'] ) && 'confirm' == $_GET['checkemail'] )
-							$this->errors->add( 'confirm', __( 'Check your email for the confirmation link.', 'theme-my-login' ), 'message' );
+							$this->errors->add( 'confirm', __( 'Check your email for the confirmation link.', 'easy-user-profile' ), 'message' );
 						elseif	( isset($_GET['checkemail']) && 'newpass' == $_GET['checkemail'] )
-							$this->errors->add( 'newpass', __( 'Check your email for your new password.', 'theme-my-login' ), 'message' );
+							$this->errors->add( 'newpass', __( 'Check your email for your new password.', 'easy-user-profile' ), 'message' );
 						elseif ( isset( $_GET['resetpass'] ) && 'complete' == $_GET['resetpass'] )
-							$this->errors->add( 'password_reset', __( 'Your password has been reset.', 'theme-my-login' ), 'message' );
+							$this->errors->add( 'password_reset', __( 'Your password has been reset.', 'easy-user-profile' ), 'message' );
 						elseif	( isset( $_GET['checkemail'] ) && 'registered' == $_GET['checkemail'] )
-							$this->errors->add( 'registered', __( 'Registration complete. Please check your email.', 'theme-my-login' ), 'message' );
+							$this->errors->add( 'registered', __( 'Registration complete. Please check your email.', 'easy-user-profile' ), 'message' );
 						elseif ( strpos( $redirect_to, 'about.php?updated' ) )
-							$this->errors->add('updated', __( '<strong>You have successfully updated WordPress!</strong> Please log back in to see what&#8217;s new.', 'theme-my-login' ), 'message' );
+							$this->errors->add('updated', __( '<strong>You have successfully updated WordPress!</strong> Please log back in to see what&#8217;s new.', 'easy-user-profile' ), 'message' );
 					}
 
 					// Clear any stale cookies.
@@ -748,7 +748,7 @@ if(typeof wpOnload=='function')wpOnload()
 		 * Bail if the URL is an interim-login URL
 		 *
 		 * This only works using the javascript workaround as implemented in
-		 * admin/theme-my-login-admin.php and admin/js/theme-my-login-admin.js.
+		 * admin/easy-user-profile-admin.php and admin/js/easy-user-profile-admin.js.
 		 *
 		 * @see http://core.trac.wordpress.org/ticket/31821
 		 */
@@ -942,7 +942,7 @@ if(typeof wpOnload=='function')wpOnload()
 	 */
 	public function authenticate( $user, $username, $password ) {
 		if ( 'email' == $this->get_option( 'login_type' ) && null == $user ) {
-			return new WP_Error( 'invalid_email', __( '<strong>ERROR</strong>: Invalid email address.', 'theme-my-login' ) );
+			return new WP_Error( 'invalid_email', __( '<strong>ERROR</strong>: Invalid email address.', 'easy-user-profile' ) );
 		}
 
 		return $user;
@@ -954,7 +954,7 @@ if(typeof wpOnload=='function')wpOnload()
 	 ************************************************************************************************************************/
 
 	/**
-	 * Handler for "theme-my-login" shortcode
+	 * Handler for "easy-user-profile" shortcode
 	 *
 	 * Optional $atts contents:
 	 *
@@ -1141,7 +1141,7 @@ if(typeof wpOnload=='function')wpOnload()
 	 * @param string $file Filename of stylesheet to load
 	 * @return string Path to stylesheet
 	 */
-	public static function get_stylesheet( $file = 'theme-my-login.css' ) {
+	public static function get_stylesheet( $file = 'easy-user-profile.css' ) {
 		if ( file_exists( get_stylesheet_directory() . '/' . $file ) )
 			$stylesheet = get_stylesheet_directory_uri() . '/' . $file;
 		elseif ( file_exists( get_template_directory() . '/' . $file ) )
@@ -1232,7 +1232,7 @@ if(typeof wpOnload=='function')wpOnload()
 	 *
 	 * Note that custom translation files inside the plugin folder
 	 * will be removed on plugin updates. If you're creating custom
-	 * translation files, please place them in a '/theme-my-login/'
+	 * translation files, please place them in a '/easy-user-profile/'
 	 * directory within the global language folder.
 	 *
 	 * @since 6.4.4
@@ -1241,14 +1241,14 @@ if(typeof wpOnload=='function')wpOnload()
 	 * @param string $mofile Full path to the target mofile.
 	 */
 	public function load_custom_textdomain( $domain, $mofile ) {
-		if ( 'theme-my-login' === $domain ) {
+		if ( 'easy-user-profile' === $domain ) {
 			remove_action( 'load_textdomain', array( $this, 'load_custom_textdomain' ), 10, 2 );
 
-			// Look in global /wp-content/languages/theme-my-login folder for a translation
+			// Look in global /wp-content/languages/easy-user-profile folder for a translation
 			// and load it if available.
 			$mofile = basename( $mofile );
-			if ( file_exists( WP_LANG_DIR . '/theme-my-login/' . $mofile ) ) {
-				load_textdomain( 'theme-my-login', WP_LANG_DIR . '/theme-my-login/' . $mofile );
+			if ( file_exists( WP_LANG_DIR . '/easy-user-profile/' . $mofile ) ) {
+				load_textdomain( 'easy-user-profile', WP_LANG_DIR . '/easy-user-profile/' . $mofile );
 			}
 
 			add_action( 'load_textdomain', array( $this, 'load_custom_textdomain' ), 10, 2 );
@@ -1270,11 +1270,11 @@ if(typeof wpOnload=='function')wpOnload()
 		$errors = new WP_Error();
 
 		if ( empty( $_POST['user_login'] ) ) {
-			$errors->add( 'empty_username', __( '<strong>ERROR</strong>: Enter a username or e-mail address.', 'theme-my-login' ) );
+			$errors->add( 'empty_username', __( '<strong>ERROR</strong>: Enter a username or e-mail address.', 'easy-user-profile' ) );
 		} else if ( strpos( $_POST['user_login'], '@' ) ) {
 			$user_data = get_user_by( 'email', trim( wp_unslash( $_POST['user_login'] ) ) );
 			if ( empty( $user_data ) )
-				$errors->add( 'invalid_email', __( '<strong>ERROR</strong>: There is no user registered with that email address.', 'theme-my-login' ) );
+				$errors->add( 'invalid_email', __( '<strong>ERROR</strong>: There is no user registered with that email address.', 'easy-user-profile' ) );
 		} else {
 			$login = trim( $_POST['user_login'] );
 			$user_data = get_user_by( 'login', $login );
@@ -1286,7 +1286,7 @@ if(typeof wpOnload=='function')wpOnload()
 			return $errors;
 
 		if ( ! $user_data ) {
-			$errors->add( 'invalidcombo', __( '<strong>ERROR</strong>: Invalid username or e-mail.', 'theme-my-login' ) );
+			$errors->add( 'invalidcombo', __( '<strong>ERROR</strong>: Invalid username or e-mail.', 'easy-user-profile' ) );
 			return $errors;
 		}
 
@@ -1299,11 +1299,11 @@ if(typeof wpOnload=='function')wpOnload()
 			return $key;
 		}
 
-		$message = __( 'Someone requested that the password be reset for the following account:', 'theme-my-login' ) . "\r\n\r\n";
+		$message = __( 'Someone requested that the password be reset for the following account:', 'easy-user-profile' ) . "\r\n\r\n";
 		$message .= network_home_url( '/' ) . "\r\n\r\n";
-		$message .= sprintf( __( 'Username: %s', 'theme-my-login' ), $user_login ) . "\r\n\r\n";
-		$message .= __( 'If this was a mistake, just ignore this email and nothing will happen.', 'theme-my-login' ) . "\r\n\r\n";
-		$message .= __( 'To reset your password, visit the following address:', 'theme-my-login' ) . "\r\n\r\n";
+		$message .= sprintf( __( 'Username: %s', 'easy-user-profile' ), $user_login ) . "\r\n\r\n";
+		$message .= __( 'If this was a mistake, just ignore this email and nothing will happen.', 'easy-user-profile' ) . "\r\n\r\n";
+		$message .= __( 'To reset your password, visit the following address:', 'easy-user-profile' ) . "\r\n\r\n";
 		$message .= '<' . network_site_url( "wp-login.php?action=rp&key=$key&login=" . rawurlencode( $user_login ), 'login' ) . ">\r\n";
 
 		if ( is_multisite() ) {
@@ -1314,13 +1314,13 @@ if(typeof wpOnload=='function')wpOnload()
 			$blogname = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
 		}
 
-		$title = sprintf( __( '[%s] Password Reset', 'theme-my-login' ), $blogname );
+		$title = sprintf( __( '[%s] Password Reset', 'easy-user-profile' ), $blogname );
 
 		$title = apply_filters( 'retrieve_password_title', $title, $user_login, $user_data );
 		$message = apply_filters( 'retrieve_password_message', $message, $key, $user_login, $user_data );
 
 		if ( $message && ! wp_mail( $user_email, $title, $message ) )
-			wp_die( __( 'The e-mail could not be sent.', 'theme-my-login' ) . "<br />\n" . __( 'Possible reason: your host may have disabled the mail() function...', 'theme-my-login' ) );
+			wp_die( __( 'The e-mail could not be sent.', 'easy-user-profile' ) . "<br />\n" . __( 'Possible reason: your host may have disabled the mail() function...', 'easy-user-profile' ) );
 
 		return true;
 	}

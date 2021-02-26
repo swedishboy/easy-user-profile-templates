@@ -164,7 +164,7 @@ class Theme_My_Login_Security extends Theme_My_Login_Abstract {
 	 */
 	public function action_messages( &$theme_my_login ) {
 		if ( isset( $_GET['unlock'] ) && 'complete' == $_GET['unlock'] )
-			$theme_my_login->errors->add( 'unlock_complete', __( 'Your account has been unlocked. You may now log in.', 'theme-my-login' ), 'message' );
+			$theme_my_login->errors->add( 'unlock_complete', __( 'Your account has been unlocked. You may now log in.', 'easy-user-profile' ), 'message' );
 	}
 
 	/**
@@ -182,16 +182,16 @@ class Theme_My_Login_Security extends Theme_My_Login_Abstract {
 		$key = preg_replace( '/[^a-z0-9]/i', '', $key );
 
 		if ( empty( $key ) || ! is_string( $key ) )
-			return new WP_Error( 'invalid_key', __( 'Invalid key', 'theme-my-login' ) );
+			return new WP_Error( 'invalid_key', __( 'Invalid key', 'easy-user-profile' ) );
 
 		if ( empty( $login ) || ! is_string( $login ) )
-			return new WP_Error( 'invalid_key', __( 'Invalid key', 'theme-my-login' ) );
+			return new WP_Error( 'invalid_key', __( 'Invalid key', 'easy-user-profile' ) );
 
 		if ( ! $user = get_user_by( 'login', $login ) )
-			return new WP_Error( 'invalid_key', __( 'Invalid key', 'theme-my-login' ) );
+			return new WP_Error( 'invalid_key', __( 'Invalid key', 'easy-user-profile' ) );
 
 		if ( $key != self::get_user_unlock_key( $user->ID ) )
-			return new WP_Error( 'invalid_key', __( 'Invalid key', 'theme-my-login' ) );
+			return new WP_Error( 'invalid_key', __( 'Invalid key', 'easy-user-profile' ) );
 
 		return $user;
 	}
@@ -224,9 +224,9 @@ class Theme_My_Login_Security extends Theme_My_Login_Abstract {
 				if ( $time > $expiration )
 					self::unlock_user( $userdata->ID );
 				else
-					return new WP_Error( 'locked_account', sprintf( __( '<strong>ERROR</strong>: This account has been locked because of too many failed login attempts. You may try again in %s.', 'theme-my-login' ), human_time_diff( $time, $expiration ) ) );
+					return new WP_Error( 'locked_account', sprintf( __( '<strong>ERROR</strong>: This account has been locked because of too many failed login attempts. You may try again in %s.', 'easy-user-profile' ), human_time_diff( $time, $expiration ) ) );
 			} else {
-				return new WP_Error( 'locked_account', __( '<strong>ERROR</strong>: This account has been locked.', 'theme-my-login' ) );
+				return new WP_Error( 'locked_account', __( '<strong>ERROR</strong>: This account has been locked.', 'easy-user-profile' ) );
 			}
 		} elseif ( is_wp_error( $user ) && 'incorrect_password' == $user->get_error_code() ) {
 			// Get the attempts
@@ -247,7 +247,7 @@ class Theme_My_Login_Security extends Theme_My_Login_Abstract {
 					// Create new expiration
 					$expiration = $time + self::get_seconds_from_unit( $this->get_option( array( 'failed_login', 'lockout_duration' ) ), $this->get_option( array( 'failed_login', 'lockout_duration_unit' ) ) );
 					self::lock_user( $userdata->ID, $expiration );
-					return new WP_Error( 'locked_account', sprintf( __( '<strong>ERROR</strong>: This account has been locked because of too many failed login attempts. You may try again in %s.', 'theme-my-login' ), human_time_diff( $time, $expiration ) ) );
+					return new WP_Error( 'locked_account', sprintf( __( '<strong>ERROR</strong>: This account has been locked because of too many failed login attempts. You may try again in %s.', 'easy-user-profile' ), human_time_diff( $time, $expiration ) ) );
 				}
 			} else {
 				// Clear the attempts
@@ -291,22 +291,22 @@ class Theme_My_Login_Security extends Theme_My_Login_Abstract {
 			return;
 
 		if ( $failed_login_attempts = self::get_failed_login_attempts( $profileuser->ID ) ) : ?>
-			<h3><?php _e( 'Failed Login Attempts', 'theme-my-login' ); ?></h3>
+			<h3><?php _e( 'Failed Login Attempts', 'easy-user-profile' ); ?></h3>
 
 			<table class="form-table">
 			<tr>
-				<th scope="col"><?php _e( 'IP Address', 'theme-my-login' ); ?></th>
-				<th scope="col"><?php _e( 'Date', 'theme-my-login' ); ?></th>
+				<th scope="col"><?php _e( 'IP Address', 'easy-user-profile' ); ?></th>
+				<th scope="col"><?php _e( 'Date', 'easy-user-profile' ); ?></th>
 			</tr>
 			<?php foreach ( $failed_login_attempts as $attempt ) :
-				$t_time = date_i18n( __( 'Y/m/d g:i:s A', 'theme-my-login' ), $attempt['time'] );
+				$t_time = date_i18n( __( 'Y/m/d g:i:s A', 'easy-user-profile' ), $attempt['time'] );
 
 				$time_diff = time() - $attempt['time'];
 
 				if ( $time_diff > 0 && $time_diff < 24*60*60 )
-					$h_time = sprintf( __( '%s ago', 'theme-my-login' ), human_time_diff( $attempt['time'] ) );
+					$h_time = sprintf( __( '%s ago', 'easy-user-profile' ), human_time_diff( $attempt['time'] ) );
 				else
-					$h_time = date_i18n( __( 'Y/m/d', 'theme-my-login' ), $attempt['time'] );
+					$h_time = date_i18n( __( 'Y/m/d', 'easy-user-profile' ), $attempt['time'] );
 			?>
 			<tr>
 				<td><?php echo $attempt['ip']; ?></td>
@@ -594,15 +594,15 @@ class Theme_My_Login_Security extends Theme_My_Login_Abstract {
 
 			$unlock_url = add_query_arg( array( 'action' => 'unlock', 'key' => self::get_user_unlock_key( $user->ID ), 'login' => rawurlencode( $user_login ) ), wp_login_url() );
 
-			$title    = sprintf( __( '[%s] Account Locked', 'theme-my-login' ), $blogname );
-			$message  = sprintf( __( 'For your security, your account has been locked because of too many failed login attempts. To unlock your account please click the following link: ', 'theme-my-login' ), $blogname ) . "\r\n\r\n";
+			$title    = sprintf( __( '[%s] Account Locked', 'easy-user-profile' ), $blogname );
+			$message  = sprintf( __( 'For your security, your account has been locked because of too many failed login attempts. To unlock your account please click the following link: ', 'easy-user-profile' ), $blogname ) . "\r\n\r\n";
 			$message .=  $unlock_url . "\r\n";
 
 			if ( $user->has_cap( 'administrator' ) ) {
 				$message .= "\r\n";
-				$message .= __( 'The following attempts resulted in the lock:', 'theme-my-login' ) . "\r\n\r\n";
+				$message .= __( 'The following attempts resulted in the lock:', 'easy-user-profile' ) . "\r\n\r\n";
 				foreach ( self::get_failed_login_attempts( $user->ID ) as $attempt ) {
-					$time = date_i18n( __( 'Y/m/d g:i:s A', 'theme-my-login' ), $attempt['time'] );
+					$time = date_i18n( __( 'Y/m/d g:i:s A', 'easy-user-profile' ), $attempt['time'] );
 					$message .= $attempt['ip'] . "\t" . $time . "\r\n";
 				}
 			}

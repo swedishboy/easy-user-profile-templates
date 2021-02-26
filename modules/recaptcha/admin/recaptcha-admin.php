@@ -86,8 +86,8 @@ class Theme_My_Login_Recaptcha_Admin extends Theme_My_Login_Abstract {
 
 		add_submenu_page(
 			'theme_my_login',
-			__( 'Theme My Login reCAPTCHA Settings', 'theme-my-login' ),
-			__( 'reCAPTCHA', 'theme-my-login' ),
+			__( 'Theme My Login reCAPTCHA Settings', 'easy-user-profile' ),
+			__( 'reCAPTCHA', 'easy-user-profile' ),
 			'manage_options',
 			$this->options_key,
 			array( $this, 'settings_page' )
@@ -95,9 +95,9 @@ class Theme_My_Login_Recaptcha_Admin extends Theme_My_Login_Abstract {
 
 		add_settings_section( 'general', null, '__return_false', $this->options_key );
 
-		add_settings_field( 'public_key',  __( 'Site Key',   'theme-my-login' ), array( $this, 'settings_field_public_key'  ), $this->options_key, 'general' );
-		add_settings_field( 'private_key', __( 'Secret Key', 'theme-my-login' ), array( $this, 'settings_field_private_key' ), $this->options_key, 'general' );
-		add_settings_field( 'theme',       __( 'Theme',      'theme-my-login' ), array( $this, 'settings_field_theme'       ), $this->options_key, 'general' );
+		add_settings_field( 'public_key',  __( 'Site Key',   'easy-user-profile' ), array( $this, 'settings_field_public_key'  ), $this->options_key, 'general' );
+		add_settings_field( 'private_key', __( 'Secret Key', 'easy-user-profile' ), array( $this, 'settings_field_private_key' ), $this->options_key, 'general' );
+		add_settings_field( 'theme',       __( 'Theme',      'easy-user-profile' ), array( $this, 'settings_field_theme'       ), $this->options_key, 'general' );
 	}
 
 	/**
@@ -120,8 +120,8 @@ class Theme_My_Login_Recaptcha_Admin extends Theme_My_Login_Abstract {
 	 */
 	public function get_themes() {
 		$recaptcha_themes = array(
-			'light' => _x( 'Light', 'recaptcha theme', 'theme-my-login' ),
-			'dark'  => _x( 'Dark',  'recaptcha theme', 'theme-my-login' )
+			'light' => _x( 'Light', 'recaptcha theme', 'easy-user-profile' ),
+			'dark'  => _x( 'Dark',  'recaptcha theme', 'easy-user-profile' )
 		);
 		return apply_filters( 'theme_my_login_recaptcha_themes', $recaptcha_themes );
 	}
@@ -136,7 +136,7 @@ class Theme_My_Login_Recaptcha_Admin extends Theme_My_Login_Abstract {
 	 */
 	public function settings_page() {
 		Theme_My_Login_Admin::settings_page( array(
-			'title'       => __( 'Theme My Login reCAPTCHA Settings', 'theme-my-login' ),
+			'title'       => __( 'Theme My Login reCAPTCHA Settings', 'easy-user-profile' ),
 			'options_key' => $this->options_key
 		) );
 	}
